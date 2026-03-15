@@ -1,0 +1,31 @@
+.player-profile-layout {
+    margin-block: 2rem 3rem;
+}
+
+.player-profile-meta {
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+    margin: .35rem 0 0;
+    min-width: 0;
+}
+
+.player-profile-bio-card,
+.player-profile-highlights-card,
+.player-profile-social-card,
+.player-profile-published-card {
+    padding: 1rem;
+}
+
+.player-profile-section-title {
+    margin: 0;
+}
+
+.player-profile-section-content,
+.player-profile-highlights-list {
+    margin-top: .5rem;
+}
+
+.player-profile-card-title {
+    margin: 0 0 .5rem 0;
+}

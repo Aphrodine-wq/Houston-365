@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Houston365 — Houston Texans Sports News</title>
+<style>
+/* === Reset & Base === */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    background: linear-gradient(180deg, #040b2f 0%, #071344 50%, #0a1f5c 100%);
+    min-height: 100vh;
+    color: #f4f6ff;
+    line-height: 1.5;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; height: auto; }
+button { cursor: pointer; font-family: inherit; }
+
+/* === CSS Custom Properties === */
+:root {
+    --texans-red: #A71930;
+    --texans-navy: #03202F;
+    --texans-blue: #03202F;
+    --accent-cyan: #36d2ff;
+    --accent-green: #44f0c9;
+    --news-navy: #050b2c;
+    --news-panel: #0b1845;
+}
+
+/* === Top Navigation Bar === */
+.site-header {
+    background: #03202F;
+    border-bottom: 3px solid #A71930;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+.site-header__inner {
+    max-width: 1380px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+}
+.site-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 900;
+    font-size: 1.5rem;
+    color: #fff;
+    letter-spacing: -0.02em;
+}
+.site-logo .logo-houston { color: #fff; }
+.site-logo .logo-365 { color: #A71930; }
+.site-logo .logo-icon {
+    width: 36px; height: 36px;
+    background: #A71930;
+    display: grid; place-items: center;
+    font-size: 1.1rem; font-weight: 900; color: #fff;
+}
+
+.site-nav { display: flex; gap: 0; align-items: center; }
+.site-nav a {
+    padding: 0 1rem; height: 64px;
+    display: flex; align-items: center;
+    font-size: 0.82rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.85);
+    transition: background 0.2s, color 0.2s;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -3px;
+}
+.site-nav a:hover, .site-nav a.active {
+    background: rgba(167,25,48,0.15);
+    color: #fff;
+    border-bottom-color: #A71930;
+}
+
+@media (max-width: 900px) {
+    .site-nav { display: none; }
+    .site-header__inner { justify-content: center; }
+}
+
+/* === Front Page Wrapper === */
+.front-page-wrapper {
+    width: 100%; max-width: 1380px;
+    margin: 0 auto; padding: 1rem 1.5rem 3.5rem;
+}
+
+/* === Hero + Sidebar Grid === */
+.hero-sidebar-wrapper {
+    display: grid; gap: 1.5rem;
+    margin: 1.5rem 0 3rem;
+    grid-template-columns: 1fr;
+    grid-template-areas: "stack" "sidebar";
+    background: linear-gradient(135deg, rgba(8,18,54,0.95) 0%, rgba(9,28,78,0.98) 85%);
+    padding: 1.5rem;
+    box-shadow: 0 35px 80px rgba(3,6,23,0.65);
+}
+@media (min-width: 1024px) {
+    .hero-sidebar-wrapper {
+        grid-template-columns: minmax(0,72%) minmax(0,28%);
+        grid-template-areas: "stack sidebar";
+        gap: 1.75rem;
+    }
+}
+.hero-stack { grid-area: stack; display: flex; flex-direction: column; gap: 0; min-width: 0; }
+.sidebar { grid-area: sidebar; display: flex; flex-direction: column; gap: 1.75rem; min-width: 0; }
+
+/* === Hero Section === */
+.hero-container {
+    position: relative; width: 100%; overflow: hidden;
+    background: #0b1220;
+}
+.hero-media {
+    position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden; background: #0b1220;
+}
+@media (min-width: 1024px) {
+    .hero-sidebar-wrapper .hero-media { aspect-ratio: 2/1; }
+}
+.hero-image {
+    width: 100%; height: 100%; object-fit: cover;
+}
+.hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.8) 100%);
+    z-index: 1;
+}
+.hero-content {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 2rem; color: #fff; z-index: 2;
+}
+.hero-title {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 800; line-height: 1.2; color: #fff;
+}
+.hero-dots {
+    position: absolute; bottom: 1.5rem; left: 50%;
+    transform: translateX(-50%); display: flex; gap: 0.5rem; z-index: 3;
+}
+.hero-dot {
+    width: 12px; height: 12px; border: 2px solid rgba(255,255,255,0.6);
+    background: transparent; padding: 0; transition: all 0.3s;
+}
+.hero-dot.is-active {
+    background: #fff; border-color: #fff; width: 32px;
+}
+.hero-btn {
+    position: absolute; top: 50%; z-index: 3;
+    width: 48px; height: 48px;
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
+    color: #fff; border: none; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+}
+.hero-btn:hover { background: rgba(0,0,0,0.8); }
+.hero-prev { left: 1rem; transform: translateY(-50%); }
+.hero-next { right: 1rem; transform: translateY(-50%); }
+
+/* === Main Sections === */
+.hts-main-sections { display: flex; flex-direction: column; gap: 2.5rem; margin: 2rem 0 0; }
+
+/* === Section Containers === */
+.hts-section {
+    background: rgba(6,13,45,0.9);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 1.5rem; color: #f5f7ff;
+    box-shadow: 0 18px 36px rgba(2,6,24,0.35);
+}
+.hts-section--recent { padding: 1.75rem; }
+
+.recent-posts-header {
+    margin-bottom: 1.5rem; padding-bottom: 0.75rem;
+    border-bottom: 2px solid rgba(255,255,255,0.18);
+}
+.recent-posts-title {
+    font-size: clamp(1.5rem, 2.5vw, 1.875rem);
+    font-weight: 700; color: #fff;
+    text-transform: uppercase; letter-spacing: 0.08em;
+}
+.recent-posts-subtitle { margin: 0.35rem 0 0; font-size: 0.95rem; color: #9fb5ff; }
+
+/* === Two-Column Grid === */
+.hts-two-col-grid {
+    display: grid; grid-template-columns: 1fr; gap: 1.1rem;
+}
+@media (min-width: 1024px) {
+    .hts-two-col-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* === News Card === */
+.news-card {
+    background: rgba(6,13,45,0.9);
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 16px 34px rgba(2,6,24,0.35);
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+.news-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255,255,255,0.14);
+    box-shadow: 0 26px 48px rgba(2,6,24,0.45);
+}
+.news-card-link {
+    display: grid; grid-template-columns: 150px 1fr;
+    gap: 1.1rem; padding: 0.95rem 1.05rem;
+    text-decoration: none; color: #f6f8ff; height: 100%;
+}
+@media (max-width: 720px) {
+    .news-card-link { grid-template-columns: 1fr; }
+}
+.news-card-media {
+    position: relative; width: 100%; aspect-ratio: 4/3;
+    overflow: hidden; background: rgba(255,255,255,0.05); min-height: 120px;
+}
+.news-card-image {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.3s;
+}
+.news-card:hover .news-card-image { transform: scale(1.03); }
+.news-card-body { display: flex; flex-direction: column; gap: 0.35rem; min-width: 0; }
+.news-card-badge {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    padding: 0.2rem 0.65rem; font-size: 0.75rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    border: 1px solid rgba(255,255,255,0.18); color: #e5edff;
+    width: fit-content;
+}
+.badge-game-recap { background: rgba(167,25,48,0.9) !important; border-color: rgba(167,25,48,0.9) !important; color: #fff !important; }
+.badge-recruiting { background: #cf142b !important; border-color: #cf142b !important; color: #fff !important; }
+.badge-category { background: rgba(3,32,47,0.9) !important; border-color: rgba(3,32,47,0.9) !important; color: #fff !important; }
+.badge-video { background: #b5ddff !important; border-color: #b5ddff !important; color: var(--texans-navy) !important; }
+.badge-opinion { background: #fff !important; border-color: #fff !important; color: #A71930 !important; }
+
+.news-card-title {
+    margin: 0; font-size: clamp(1rem, 1.6vw, 1.15rem);
+    font-weight: 800; line-height: 1.35; color: #fff;
+}
+.news-card:hover .news-card-title { color: var(--accent-cyan); }
+.news-card-meta {
+    display: flex; align-items: center; gap: 0.5rem;
+    color: rgba(255,255,255,0.7); font-size: 0.85rem; flex-wrap: wrap;
+}
+.news-card-author { font-weight: 700; color: #fff; }
+.news-card-separator { opacity: 0.45; }
+.news-card-date { color: rgba(255,255,255,0.75); }
+.news-card-excerpt {
+    margin: 0.15rem 0 0; font-size: 0.92rem; line-height: 1.5;
+    color: rgba(255,255,255,0.8);
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* === Load More === */
+.load-more-btn {
+    display: inline-flex; align-items: center; gap: 0.75rem;
+    padding: 0.875rem 2.25rem;
+    background: linear-gradient(120deg, var(--accent-green) 0%, var(--accent-cyan) 100%);
+    color: var(--news-navy); border: none; font-size: 0.9375rem;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    box-shadow: 0 12px 30px rgba(54,210,255,0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.load-more-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 36px rgba(68,240,201,0.35);
+}
+.recent-posts-pagination { margin-top: 2rem; text-align: center; }
+
+/* === Section Headers === */
+.hts-section__header {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem; margin-bottom: 1.25rem;
+}
+.hts-section__title {
+    margin: 0; font-size: 1.125rem; letter-spacing: 0.06em;
+    text-transform: uppercase; font-weight: 800; color: #fff;
+}
+.hts-section__more {
+    font-size: 0.85rem; font-weight: 700; color: var(--accent-cyan);
+    letter-spacing: 0.06em; text-transform: uppercase;
+}
+.hts-section__more:hover { color: var(--accent-green); }
+
+/* === Recruiting Section === */
+.hts-section--recruiting {
+    border: 2px solid #cf142b;
+    box-shadow: 0 22px 44px rgba(207,20,43,0.14);
+    background: linear-gradient(145deg, rgba(9,17,52,0.95) 0%, rgba(8,12,32,0.93) 100%);
+}
+.hts-section--recruiting .hts-section__header {
+    border-bottom: 2px solid rgba(207,20,43,0.4); padding-bottom: 1rem;
+}
+.hts-compact-grid { display: grid; grid-template-columns: 1fr; gap: 0.9rem; }
+@media (min-width: 900px) {
+    .hts-compact-grid--three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* === Compact Card === */
+.hts-compact-card {
+    background: rgba(10,17,48,0.95);
+    border: 1px solid rgba(255,255,255,0.08);
+    display: flex; flex-direction: column; gap: 0.75rem;
+    padding: 0.95rem 1rem; color: #f1f4ff;
+    transition: transform 0.2s, border-color 0.2s;
+}
+.hts-compact-card:hover {
+    transform: translateY(-2px); border-color: rgba(255,255,255,0.18);
+}
+.hts-compact-card__media {
+    width: 100%; aspect-ratio: 16/9; overflow: hidden;
+    background: rgba(255,255,255,0.06);
+}
+.hts-compact-card__image { width: 100%; height: 100%; object-fit: cover; }
+.hts-compact-card__title {
+    margin: 0; font-size: 1rem; font-weight: 800; line-height: 1.35; color: #fff;
+}
+.hts-compact-card:hover .hts-compact-card__title { color: var(--accent-cyan); }
+.hts-compact-card__date {
+    color: rgba(255,255,255,0.75); font-size: 0.85rem;
+}
+
+/* === Sidebar Module === */
+.sidebar-module {
+    background: rgba(9,19,60,0.95);
+    padding: 1.75rem;
+    box-shadow: 0 30px 60px rgba(1,4,18,0.6);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #f1f4ff;
+}
+.module-header {
+    margin-bottom: 1.25rem; padding-bottom: 0.875rem;
+    border-bottom: 2px solid rgba(255,255,255,0.08);
+}
+.module-title {
+    margin: 0; font-size: 1.125rem; font-weight: 700;
+    color: #fff; text-transform: uppercase; letter-spacing: 0.025em;
+}
+
+/* Podcast items */
+.podcasts-list { display: flex; flex-direction: column; gap: 1rem; }
+.podcast-link {
+    display: flex; align-items: flex-start; gap: 0.875rem;
+    padding: 0.5rem; margin: -0.5rem;
+    transition: background 0.2s, transform 0.2s;
+}
+.podcast-link:hover { background: rgba(255,255,255,0.05); transform: translateX(4px); }
+.podcast-thumb {
+    flex-shrink: 0; width: 80px; height: 80px; overflow: hidden;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1);
+}
+.podcast-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.podcast-content { flex: 1; min-width: 0; }
+.podcast-title {
+    margin: 0 0 0.375rem; font-size: 0.9375rem; font-weight: 600;
+    line-height: 1.4; color: #fff;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.podcast-runtime { font-size: 0.8125rem; color: rgba(255,255,255,0.7); }
+
+/* Opinion items */
+.opinion-list { display: flex; flex-direction: column; gap: 0.85rem; }
+.opinion-link {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 0.65rem 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+    transition: color 0.2s;
+}
+.opinion-link:last-child { border-bottom: none; }
+.opinion-thumb {
+    flex-shrink: 0; width: 56px; height: 56px;
+    border-radius: 50%; overflow: hidden;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+}
+.opinion-thumb img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.opinion-body { display: flex; flex-direction: column; gap: 0.35rem; min-width: 0; }
+.opinion-title { margin: 0; font-size: 0.98rem; font-weight: 700; line-height: 1.35; color: #fff; }
+.opinion-link:hover .opinion-title { color: var(--accent-cyan); }
+.opinion-meta { font-size: 0.82rem; color: rgba(255,255,255,0.7); }
+.opinion-author { font-weight: 700; color: #fff; }
+
+/* Module footer */
+.module-footer { margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.1); }
+.module-view-all {
+    display: inline-flex; align-items: center; gap: 0.375rem;
+    font-size: 0.875rem; font-weight: 700; color: var(--accent-cyan);
+    text-transform: uppercase; letter-spacing: 0.05em;
+    transition: gap 0.2s, color 0.2s;
+}
+.module-view-all:hover { gap: 0.625rem; color: var(--accent-green); }
+
+/* === Placeholder Image Styling === */
+.placeholder-img {
+    width: 100%; height: 100%; display: flex;
+    align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.7rem; text-transform: uppercase;
+    letter-spacing: 0.1em; color: rgba(255,255,255,0.25);
+}
+.placeholder-hero {
+    background: linear-gradient(135deg, #03202F 0%, #0a3a52 50%, #A71930 100%);
+    font-size: 1.2rem;
+}
+.placeholder-card {
+    background: linear-gradient(135deg, #03202F 0%, #0d2b3d 100%);
+}
+.placeholder-podcast {
+    background: linear-gradient(135deg, #03202F 0%, #A71930 100%);
+    font-size: 0.6rem;
+}
+
+/* === Responsive === */
+@media (max-width: 767px) {
+    .front-page-wrapper { padding: 0.75rem 1rem 2.5rem; }
+    .hero-sidebar-wrapper { padding: 1.25rem; }
+    .hero-content { padding: 1rem; }
+    .sidebar-module { padding: 1.25rem; }
+}
+@media (max-width: 480px) {
+    .front-page-wrapper { padding: 0 0.875rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== SITE HEADER ===== -->
+<header class="site-header">
+    <div class="site-header__inner">
+        <a href="#" class="site-logo">
+            <span class="logo-icon">H</span>
+            <span class="logo-houston">HOUSTON</span><span class="logo-365">365</span>
+        </a>
+        <nav class="site-nav">
+            <a href="#" class="active">Home</a>
+            <a href="#">Football</a>
+            <a href="#">News</a>
+            <a href="#">Recruiting</a>
+            <a href="#">Podcasts</a>
+            <a href="#">Forums</a>
+            <a href="#">Subscribe</a>
+        </nav>
+    </div>
+</header>
+
+<!-- ===== FRONT PAGE ===== -->
+<div class="front-page-wrapper">
+    <div class="hero-sidebar-wrapper">
+
+        <!-- Hero + Main Content Stack -->
+        <div class="hero-stack">
+
+            <!-- HERO SLIDER -->
+            <section class="hero" aria-label="Featured Content">
+                <div class="hero-container">
+                    <div class="hero-media">
+                        <div class="placeholder-img placeholder-hero">Houston365</div>
+                        <div class="hero-overlay"></div>
+                    </div>
+                    <div class="hero-content">
+                        <h1 class="hero-title">Stroud Leads Texans to Dominant Win Over Division Rivals in Week 14 Showdown</h1>
+                    </div>
+                    <button class="hero-btn hero-prev" type="button" aria-label="Previous slide">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <button class="hero-btn hero-next" type="button" aria-label="Next slide">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="hero-dots">
+                        <button class="hero-dot is-active"></button>
+                        <button class="hero-dot"></button>
+                        <button class="hero-dot"></button>
+                        <button class="hero-dot"></button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MAIN CONTENT: RECENT NEWS -->
+            <main class="hts-main-sections" role="main">
+                <section class="hts-section hts-section--recent">
+                    <header class="recent-posts-header">
+                        <div>
+                            <h2 class="recent-posts-title">Recent News</h2>
+                            <p class="recent-posts-subtitle">Catch up on the latest news from the Houston365 crew.</p>
+                        </div>
+                    </header>
+
+                    <div class="hts-two-col-grid">
+                        <!-- Card 1 -->
+                        <article class="news-card">
+                            <a href="#" class="news-card-link">
+                                <div class="news-card-media"><div class="placeholder-img placeholder-card">IMG</div></div>
+                                <div class="news-card-body">
+                                    <span class="news-card-badge badge-game-recap">Game Recap</span>
+                                    <h3 class="news-card-title">Texans Defense Shuts Down Colts in 27-10 AFC South Victory</h3>
+                                    <div class="news-card-meta">
+                                        <span class="news-card-author">Marcus Webb</span>
+                                        <span class="news-card-separator">·</span>
+                                        <time class="news-card-date">Mar 12, 2026</time>
+                                    </div>
+                                    <p class="news-card-excerpt">The Houston defense put on a masterclass, holding the Colts to just 187 total yards in a dominant divisional win.</p>
+                                </div>
+                            </a>
+                        </article>
+                        <!-- Card 2 -->
+                        <article class="news-card">
+                            <a href="#" class="news-card-link">
+                                <div class="news-card-media"><div class="placeholder-img placeholder-card">IMG</div></div>
+                                <div class="news-card-body">
+                                    <span class="news-card-badge badge-recruiting">Recruiting</span>
+                                    <h3 class="news-card-title">5-Star CB Jaylen Carter Commits to Houston: "This Is Where I Belong"</h3>
+                                    <div class="news-card-meta">
+                                        <span class="news-card-author">Dana Ortiz</span>
+                                        <span class="news-card-separator">·</span>
+                                        <time class="news-card-date">Mar 11, 2026</time>
+                                    </div>
+                                    <p class="news-card-excerpt">The top-rated cornerback in the 2026 class has officially given his verbal commitment to the Texans organization.</p>
+                                </div>
+                            </a>
+                        </article>
+                        <!-- Card 3 -->
+                        <article class="news-card">
+                            <a href="#" class="news-card-link">
+                                <div class="news-card-media"><div class="placeholder-img placeholder-card">IMG</div></div>
+                                <div class="news-card-body">
+                                    <span class="news-card-badge badge-category">Analysis</span>
+                                    <h3 class="news-card-title">Breaking Down the Texans' Cap Space Heading Into Free Agency</h3>
+                                    <div class="news-card-meta">
+                                        <span class="news-card-author">Chris Landon</span>
+                                        <span class="news-card-separator">·</span>
+                                        <time class="news-card-date">Mar 10, 2026</time>
+                                    </div>
+                                    <p class="news-card-excerpt">Houston has roughly $42M in cap room. Here's how they should allocate it to maximize the championship window.</p>
+                                </div>
+                            </a>
+                        </article>
+                        <!-- Card 4 -->
+                        <article class="news-card">
+                            <a href="#" class="news-card-link">
+                                <div class="news-card-media"><div class="placeholder-img placeholder-card">IMG</div></div>
+                                <div class="news-card-body">
+                                    <span class="news-card-badge badge-video">Video</span>
+                                    <h3 class="news-card-title">Film Room: How Stroud's Pre-Snap Reads Have Evolved in Year 3</h3>
+                                    <div class="news-card-meta">
+                                        <span class="news-card-author">Jason Miles</span>
+                                        <span class="news-card-separator">·</span>
+                                        <time class="news-card-date">Mar 9, 2026</time>
+                                    </div>
+                                    <p class="news-card-excerpt">An in-depth film study of how C.J. Stroud has refined his ability to read defenses before the snap.</p>
+                                </div>
+                            </a>
+                        </article>
+                        <!-- Card 5 -->
+                        <article class="news-card">
+                            <a href="#" class="news-card-link">
+                                <div class="news-card-media"><div class="placeholder-img placeholder-card">IMG</div></div>
+                                <div class="news-card-body">
+                                    <span class="news-card-badge badge-opinion">Opinion</span>
+                                    <h3 class="news-card-title">Why the Texans Should Trade Up in the Draft for a Pass Rusher</h3>
+                                    <div class="news-card-meta">
+                                        <span class="news-card-author">Kyle Preston</span>
+                                        <span class="news-card-separator">·</span>
+                                        <time class="news-card-date">Mar 8, 2026</time>
+                                    </div>
+                                    <p class="news-card-excerpt">Houston needs a dominant edge presence. Here's the case for being aggressive on draft night.</p>
+                                </div>
+                            </a>
+                        </article>
+                        <!-- Card 6 -->
+                        <article class="news-card">
+                            <a href="#" class="news-card-link">
+                                <div class="news-card-media"><div class="placeholder-img placeholder-card">IMG</div></div>
+                                <div class="news-card-body">
+                                    <span class="news-card-badge badge-game-recap">Game Recap</span>
+                                    <h3 class="news-card-title">Texans Rally in 4th Quarter to Edge Out Jaguars 24-21</h3>
+                                    <div class="news-card-meta">
+                                        <span class="news-card-author">Marcus Webb</span>
+                                        <span class="news-card-separator">·</span>
+                                        <time class="news-card-date">Mar 7, 2026</time>
+                                    </div>
+                                    <p class="news-card-excerpt">A dramatic late-game drive capped by a 34-yard touchdown sealed the win in Jacksonville.</p>
+                                </div>
+                            </a>
+                        </article>
+                    </div>
+
+                    <div class="recent-posts-pagination">
+                        <button class="load-more-btn" type="button">
+                            <span>More Recent News</span>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- RECRUITING SECTION -->
+                <section class="hts-section hts-section--recruiting">
+                    <header class="hts-section__header">
+                        <h2 class="hts-section__title">Recruiting</h2>
+                        <a href="#" class="hts-section__more">View All →</a>
+                    </header>
+                    <div class="hts-compact-grid hts-compact-grid--three">
+                        <article class="hts-compact-card">
+                            <div class="hts-compact-card__media"><div class="placeholder-img placeholder-card">IMG</div></div>
+                            <div>
+                                <h3 class="hts-compact-card__title">2027 4-Star WR DeShawn Brooks Visits NRG Stadium</h3>
+                                <time class="hts-compact-card__date">Mar 11, 2026</time>
+                            </div>
+                        </article>
+                        <article class="hts-compact-card">
+                            <div class="hts-compact-card__media"><div class="placeholder-img placeholder-card">IMG</div></div>
+                            <div>
+                                <h3 class="hts-compact-card__title">Texans Host Top D-Line Prospects for Pro Day Workouts</h3>
+                                <time class="hts-compact-card__date">Mar 10, 2026</time>
+                            </div>
+                        </article>
+                        <article class="hts-compact-card">
+                            <div class="hts-compact-card__media"><div class="placeholder-img placeholder-card">IMG</div></div>
+                            <div>
+                                <h3 class="hts-compact-card__title">Houston365 Top 10: Updated Draft Board for the Texans</h3>
+                                <time class="hts-compact-card__date">Mar 9, 2026</time>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+            </main>
+        </div><!-- .hero-stack -->
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" role="complementary">
+
+            <!-- Podcasts Module -->
+            <section class="sidebar-module">
+                <header class="module-header">
+                    <h2 class="module-title">Podcasts</h2>
+                </header>
+                <div class="podcasts-list">
+                    <article class="podcast-item">
+                        <a href="#" class="podcast-link">
+                            <div class="podcast-thumb"><div class="placeholder-img placeholder-podcast">POD</div></div>
+                            <div class="podcast-content">
+                                <h3 class="podcast-title">Locked on Houston: Why Stroud Is the AFC's Best QB Right Now</h3>
+                                <span class="podcast-runtime">42 min</span>
+                            </div>
+                        </a>
+                    </article>
+                    <article class="podcast-item">
+                        <a href="#" class="podcast-link">
+                            <div class="podcast-thumb"><div class="placeholder-img placeholder-podcast">POD</div></div>
+                            <div class="podcast-content">
+                                <h3 class="podcast-title">The Houston365 Podcast: Draft Targets and Free Agency Preview</h3>
+                                <span class="podcast-runtime">58 min</span>
+                            </div>
+                        </a>
+                    </article>
+                    <article class="podcast-item">
+                        <a href="#" class="podcast-link">
+                            <div class="podcast-thumb"><div class="placeholder-img placeholder-podcast">POD</div></div>
+                            <div class="podcast-content">
+                                <h3 class="podcast-title">Texans Talk: Defensive Scheme Changes Under New Coordinator</h3>
+                                <span class="podcast-runtime">35 min</span>
+                            </div>
+                        </a>
+                    </article>
+                </div>
+                <div class="module-footer">
+                    <a href="#" class="module-view-all">All Podcasts →</a>
+                </div>
+            </section>
+
+            <!-- Writer's Room Module -->
+            <section class="sidebar-module">
+                <header class="module-header">
+                    <h2 class="module-title">Writer's Room</h2>
+                </header>
+                <div class="opinion-list">
+                    <a href="#" class="opinion-link">
+                        <div class="opinion-thumb">
+                            <div class="placeholder-img placeholder-podcast" style="border-radius:50%;">AV</div>
+                        </div>
+                        <div class="opinion-body">
+                            <h3 class="opinion-title">The Case for Patience with Houston's O-Line</h3>
+                            <div class="opinion-meta">
+                                <span class="opinion-author">Kyle Preston</span>
+                                <span class="news-card-separator">·</span>
+                                <span>Mar 11</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" class="opinion-link">
+                        <div class="opinion-thumb">
+                            <div class="placeholder-img placeholder-podcast" style="border-radius:50%;">AV</div>
+                        </div>
+                        <div class="opinion-body">
+                            <h3 class="opinion-title">DeMeco Ryans Has Built Something Special in Houston</h3>
+                            <div class="opinion-meta">
+                                <span class="opinion-author">Dana Ortiz</span>
+                                <span class="news-card-separator">·</span>
+                                <span>Mar 9</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" class="opinion-link">
+                        <div class="opinion-thumb">
+                            <div class="placeholder-img placeholder-podcast" style="border-radius:50%;">AV</div>
+                        </div>
+                        <div class="opinion-body">
+                            <h3 class="opinion-title">Why Houston Is the NFL's Best-Run Franchise Right Now</h3>
+                            <div class="opinion-meta">
+                                <span class="opinion-author">Chris Landon</span>
+                                <span class="news-card-separator">·</span>
+                                <span>Mar 7</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="module-footer">
+                    <a href="#" class="module-view-all">All Opinions →</a>
+                </div>
+            </section>
+
+            <!-- Releases Module -->
+            <section class="sidebar-module">
+                <header class="module-header">
+                    <h2 class="module-title">Team Releases</h2>
+                </header>
+                <div style="display:flex;flex-direction:column;gap:0.75rem;">
+                    <a href="#" style="display:flex;flex-direction:column;padding:0.75rem 0;border-bottom:1px solid rgba(255,255,255,0.08);transition:color 0.2s;">
+                        <h3 style="margin:0 0 0.25rem;font-size:0.95rem;font-weight:600;line-height:1.35;color:#fff;">Texans Sign LB Marcus Williams to 3-Year Extension</h3>
+                        <span style="font-size:0.8rem;color:rgba(255,255,255,0.65);">Mar 12, 2026</span>
+                    </a>
+                    <a href="#" style="display:flex;flex-direction:column;padding:0.75rem 0;border-bottom:1px solid rgba(255,255,255,0.08);transition:color 0.2s;">
+                        <h3 style="margin:0 0 0.25rem;font-size:0.95rem;font-weight:600;line-height:1.35;color:#fff;">Injury Report: Week 15 Updates for Houston</h3>
+                        <span style="font-size:0.8rem;color:rgba(255,255,255,0.65);">Mar 11, 2026</span>
+                    </a>
+                    <a href="#" style="display:flex;flex-direction:column;padding:0.75rem 0;transition:color 0.2s;">
+                        <h3 style="margin:0 0 0.25rem;font-size:0.95rem;font-weight:600;line-height:1.35;color:#fff;">NRG Stadium to Host 2027 NFL Combine Events</h3>
+                        <span style="font-size:0.8rem;color:rgba(255,255,255,0.65);">Mar 10, 2026</span>
+                    </a>
+                </div>
+            </section>
+        </aside>
+
+    </div><!-- .hero-sidebar-wrapper -->
+</div><!-- .front-page-wrapper -->
+
+<!-- Simple hero dot interaction -->
+<script>
+document.querySelectorAll('.hero-dot').forEach((dot, i) => {
+    dot.addEventListener('click', () => {
+        document.querySelectorAll('.hero-dot').forEach(d => d.classList.remove('is-active'));
+        dot.classList.add('is-active');
+    });
+});
+</script>
+
+</body>
+</html>

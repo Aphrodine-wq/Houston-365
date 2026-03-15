@@ -1,0 +1,31 @@
+/*
+ * Gutenberg editor readability overrides (admin only).
+ */
+
+.editor-styles-wrapper {
+    background-color: #f8fafc !important;
+    color: #111827;
+    --theme-headings-color: #111827;
+    --theme-text-color: #111827;
+    --theme-link-color: #1d4ed8;
+    --theme-link-hover-color: #1e40af;
+    --theme-muted-color: #6b7280;
+}
+
+.editor-styles-wrapper .editor-post-title__input {
+    color: var(--theme-headings-color) !important;
+    -webkit-text-fill-color: var(--theme-headings-color) !important;
+}
+
+.editor-styles-wrapper .editor-post-title__input::placeholder {
+    color: #6b7280 !important;
+    opacity: 1;
+}
+
+.editor-styles-wrapper .block-editor-rich-text__editable,
+.editor-styles-wrapper .block-editor-block-list__layout,
+.editor-styles-wrapper .block-editor-block-list__block,
+.editor-styles-wrapper .block-editor-writing-flow,
+.editor-styles-wrapper .wp-block {
+    color: inherit;
+}

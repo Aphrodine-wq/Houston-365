@@ -1,0 +1,17 @@
+.home-houston365 {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-areas:
+        "hero hero"
+        "latest sidebar"
+        "sections sidebar";
+    gap: 2rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.hero { grid-area: hero; }
+.latest { grid-area: latest; }
+.sections { grid-area: sections; }
+.sidebar { grid-area: sidebar; }

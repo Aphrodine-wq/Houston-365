@@ -1,0 +1,381 @@
+/*
+ * PMPro page card layout scoped to PMPro markup.
+ */
+
+body.pmpro,
+body.pmpro-page,
+body.pmpro-account,
+body.pmpro-levels,
+body.pmpro-checkout,
+article.pmpro-has-access,
+article.pmpro-no-access,
+article:has(.entry-content .pmpro) {
+    --pmpro-card-max: 860px;
+    --pmpro-page-padding: 1.5rem;
+    --h365-card-gap: 1.25rem;
+    --h365-card-max: calc(var(--pmpro-card-max, 860px) - 3rem);
+}
+
+body.pmpro .pmpro,
+body.pmpro-page .pmpro,
+body.pmpro-account .pmpro,
+body.pmpro-levels .pmpro,
+body.pmpro-checkout .pmpro,
+article.pmpro-has-access .pmpro,
+article.pmpro-no-access .pmpro,
+article:has(.entry-content .pmpro) .pmpro,
+.entry-content .pmpro {
+    max-width: var(--pmpro-card-max, 860px);
+    margin: clamp(2rem, 6vw, 3.5rem) auto;
+    padding: 0 var(--pmpro-page-padding, 1.5rem);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+body.pmpro .hero-section.is-width-constrained .entry-header,
+body.pmpro-page .hero-section.is-width-constrained .entry-header,
+body.pmpro-account .hero-section.is-width-constrained .entry-header,
+body.pmpro-levels .hero-section.is-width-constrained .entry-header,
+body.pmpro-checkout .hero-section.is-width-constrained .entry-header,
+article.pmpro-has-access .hero-section.is-width-constrained .entry-header,
+article.pmpro-no-access .hero-section.is-width-constrained .entry-header,
+article:has(.entry-content .pmpro) .hero-section.is-width-constrained .entry-header,
+body.pmpro .entry-header,
+body.pmpro-page .entry-header,
+body.pmpro-account .entry-header,
+body.pmpro-levels .entry-header,
+body.pmpro-checkout .entry-header,
+article.pmpro-has-access .entry-header,
+article.pmpro-no-access .entry-header,
+article:has(.entry-content .pmpro) .entry-header,
+body.pmpro .ct-page-title,
+body.pmpro-page .ct-page-title,
+body.pmpro-account .ct-page-title,
+body.pmpro-levels .ct-page-title,
+body.pmpro-checkout .ct-page-title,
+article.pmpro-has-access .ct-page-title,
+article.pmpro-no-access .ct-page-title,
+article:has(.entry-content .pmpro) .ct-page-title,
+body.pmpro .page-title,
+body.pmpro-page .page-title,
+body.pmpro-account .page-title,
+body.pmpro-levels .page-title,
+body.pmpro-checkout .page-title,
+article.pmpro-has-access .page-title {
+    max-width: var(--pmpro-card-max, 860px);
+    margin: 0 auto 1.5rem;
+    padding: 0 var(--pmpro-page-padding, 1.5rem);
+    text-align: left;
+    box-sizing: border-box;
+}
+
+body.pmpro .entry-title,
+body.pmpro-page .entry-title,
+body.pmpro-account .entry-title,
+body.pmpro-levels .entry-title,
+body.pmpro-checkout .entry-title,
+article.pmpro-has-access .entry-title,
+article.pmpro-no-access .entry-title,
+article:has(.entry-content .pmpro) .entry-title,
+body.pmpro .ct-title,
+body.pmpro-page .ct-title,
+body.pmpro-account .ct-title,
+body.pmpro-levels .ct-title,
+body.pmpro-checkout .ct-title,
+article.pmpro-has-access .ct-title,
+article.pmpro-no-access .ct-title,
+article:has(.entry-content .pmpro) .ct-title,
+body.pmpro .page-title,
+body.pmpro-page .page-title,
+body.pmpro-account .page-title,
+body.pmpro-levels .page-title,
+body.pmpro-checkout .page-title,
+article.pmpro-has-access .page-title,
+body.pmpro h1,
+body.pmpro-page h1,
+body.pmpro-account h1,
+body.pmpro-levels h1,
+body.pmpro-checkout h1,
+article.pmpro-has-access h1,
+article.pmpro-no-access h1,
+article:has(.entry-content .pmpro) h1 {
+    text-align: left;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+body.pmpro .pmpro_section,
+body.pmpro-page .pmpro_section,
+.pmpro .pmpro_section {
+    margin: 0;
+}
+
+.pmpro .pmpro_section + .pmpro_section {
+    margin-top: 1.5rem;
+}
+
+.pmpro .pmpro_card {
+    margin: 0;
+    background: #ffffff;
+    border: 1px solid rgba(12, 35, 64, 0.12);
+    border-radius: 18px;
+    box-shadow: 0 16px 36px rgba(12, 35, 64, 0.12), 0 4px 12px rgba(12, 35, 64, 0.08);
+    overflow: hidden;
+}
+
+.pmpro .pmpro_card + .pmpro_card {
+    margin-top: 1.5rem;
+}
+
+.h365-card,
+.h365-profile-card,
+.h365-avatar-card {
+    background: #ffffff;
+    border: 1px solid rgba(12, 35, 64, 0.12);
+    border-radius: 18px;
+    box-shadow: 0 16px 36px rgba(12, 35, 64, 0.12), 0 4px 12px rgba(12, 35, 64, 0.08);
+    box-sizing: border-box;
+    margin: 0 auto;
+    max-width: var(--h365-card-max, 860px);
+    overflow: hidden;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    width: 100%;
+}
+
+.h365-card + .h365-card,
+.h365-profile-card + .h365-profile-card,
+.h365-profile-card + .h365-avatar-card,
+.h365-avatar-card + .h365-profile-card,
+.h365-avatar-card + .h365-avatar-card {
+    margin-top: var(--h365-card-gap, 1.25rem);
+}
+
+.h365-card-title,
+.h365-profile-card-title {
+    margin: 0 0 1rem;
+    color: var(--theme-text-color, #0c2340);
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.h365-profile-card .pmpro {
+    margin: 0;
+    max-width: 100%;
+    padding: 0;
+    width: 100%;
+}
+
+.h365-profile-card .pmpro .pmpro_card {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: visible;
+}
+
+.h365-profile-card .pmpro .pmpro_card + .pmpro_card {
+    margin-top: 0;
+}
+
+.h365-profile-card .pmpro .pmpro_card_content {
+    padding: 0;
+}
+
+.h365-avatar-card #basic-user-avatar-form {
+    display: grid;
+    gap: 0.75rem 1rem;
+    margin: 0;
+}
+
+.h365-avatar-card #basic-user-avatar-form > * {
+    margin: 0;
+}
+
+.h365-avatar-card #basic-user-avatar-form > img {
+    width: 96px;
+    height: 96px;
+    border-radius: 999px;
+    display: block;
+    object-fit: cover;
+    box-shadow: 0 8px 18px rgba(12, 35, 64, 0.12);
+}
+
+.h365-avatar-card #basic-user-avatar-form input[type="file"] {
+    width: 100%;
+    max-width: 100%;
+    background: #ffffff;
+    border: 1px dashed rgba(12, 35, 64, 0.24);
+    padding: 0.65rem 0.75rem;
+    box-sizing: border-box;
+}
+
+.h365-avatar-card #basic-user-avatar-form input[type="submit"] {
+    background-color: var(--pmpro--color--accent, var(--theme-button-background-color, #ce1126));
+    border: 1px solid var(--pmpro--color--accent, var(--theme-button-background-color, #ce1126));
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
+    color: var(--pmpro--color--base, var(--theme-button-text-color, #ffffff));
+    cursor: pointer;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: normal;
+    line-height: 1.5;
+    min-height: 40px;
+    padding: var(--pmpro--base--spacing--small, 0.65rem) var(--pmpro--base--spacing--medium, 1.1rem);
+    text-align: center;
+    transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.h365-avatar-card #basic-user-avatar-form input[type="submit"]:hover,
+.h365-avatar-card #basic-user-avatar-form input[type="submit"]:focus,
+.h365-avatar-card #basic-user-avatar-form input[type="submit"]:focus-visible {
+    background-color: var(--pmpro--color--accent--variation, var(--theme-button-background-hover-color, #a50d1f));
+    border-color: var(--pmpro--color--accent--variation, var(--theme-button-background-hover-color, #a50d1f));
+    box-shadow: 0 0 0 3px rgba(12, 35, 64, 0.12);
+    outline: none;
+    transform: translateY(-1px);
+}
+
+.h365-avatar-card #basic-user-avatar-form .description {
+    color: #5b6676;
+    font-size: 0.95rem;
+}
+
+@media (min-width: 640px) {
+    .h365-avatar-card #basic-user-avatar-form {
+        grid-template-columns: auto 1fr;
+        align-items: start;
+    }
+
+    .h365-avatar-card #basic-user-avatar-form > img {
+        grid-row: 1 / -1;
+    }
+
+    .h365-avatar-card #basic-user-avatar-form > :not(img) {
+        grid-column: 2;
+    }
+}
+
+.pmpro .pmpro_card_content {
+    padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.pmpro .pmpro_card_content > *:last-child {
+    margin-bottom: 0;
+}
+
+.pmpro fieldset.pmpro_form_fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.pmpro .pmpro_card_title {
+    margin: 0 0 0.75rem;
+    color: var(--theme-text-color, #0c2340);
+    font-weight: 700;
+}
+
+.pmpro .pmpro_table,
+.pmpro table {
+    width: 100%;
+    max-width: 100%;
+    border-collapse: collapse;
+}
+
+.pmpro .pmpro_table th,
+.pmpro .pmpro_table td,
+.pmpro table th,
+.pmpro table td {
+    word-break: break-word;
+}
+
+body.pmpro-levels .pmpro .pmpro_card_content::after {
+    content: "SPECIAL DEAL: Use code H36526 for annual subscriptions! $54.95 first year + Free Houston365 T-Shirt!";
+    display: block;
+    margin-top: 1rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid rgba(12, 35, 64, 0.12);
+    color: #0c2340;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+@media (max-width: 640px) {
+    body.pmpro,
+    body.pmpro-page,
+    body.pmpro-account,
+    body.pmpro-levels,
+    body.pmpro-checkout,
+    article.pmpro-has-access,
+    article.pmpro-no-access,
+    article:has(.entry-content .pmpro) {
+        --h365-card-gap: 1rem;
+        --h365-card-max: calc(var(--pmpro-card-max, 860px) - 2rem);
+    }
+
+    body.pmpro .pmpro,
+    body.pmpro-page .pmpro,
+    body.pmpro-account .pmpro,
+    body.pmpro-levels .pmpro,
+    body.pmpro-checkout .pmpro,
+    article.pmpro-has-access .pmpro,
+    .entry-content .pmpro {
+        padding: 0 1rem;
+    }
+
+    body.pmpro .entry-header,
+    body.pmpro-page .entry-header,
+    body.pmpro-account .entry-header,
+    body.pmpro-levels .entry-header,
+    body.pmpro-checkout .entry-header,
+    article.pmpro-has-access .entry-header,
+    article.pmpro-no-access .entry-header,
+    article:has(.entry-content .pmpro) .entry-header,
+    body.pmpro .ct-page-title,
+    body.pmpro-page .ct-page-title,
+    body.pmpro-account .ct-page-title,
+    body.pmpro-levels .ct-page-title,
+    body.pmpro-checkout .ct-page-title,
+    article.pmpro-has-access .ct-page-title,
+    article.pmpro-no-access .ct-page-title,
+    article:has(.entry-content .pmpro) .ct-page-title,
+    body.pmpro .page-title,
+    body.pmpro-page .page-title,
+    body.pmpro-account .page-title,
+    body.pmpro-levels .page-title,
+    body.pmpro-checkout .page-title,
+    article.pmpro-has-access .page-title,
+    article.pmpro-no-access .page-title,
+    article:has(.entry-content .pmpro) .page-title {
+        padding: 0 1rem;
+    }
+
+    .pmpro input[type="text"],
+    .pmpro input[type="email"],
+    .pmpro input[type="password"],
+    .pmpro input[type="tel"],
+    .pmpro input[type="number"],
+    .pmpro input[type="url"],
+    .pmpro input[type="search"],
+    .pmpro select,
+    .pmpro textarea,
+    .pmpro .pmpro_btn,
+    .pmpro .pmpro_btn-submit,
+    .pmpro button,
+    .pmpro input[type="submit"] {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .h365-avatar-card #basic-user-avatar-form input[type="submit"] {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .pmpro .pmpro_card_content {
+        overflow-x: auto;
+    }
+}

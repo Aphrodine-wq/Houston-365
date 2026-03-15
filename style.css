@@ -1,0 +1,133 @@
+/*
+Theme Name: Houston365 – Blocksy Child
+Description: Houston Texans sports news theme built on Blocksy
+Template: blocksy
+Version: 1.0.0
+*/
+
+/* Global square corners */
+:root {
+    --b-radius: 0;
+    --b-radius-sm: 0;
+    --b-radius-md: 0;
+    --b-radius-lg: 0;
+    --b-radius-xl: 0;
+}
+
+button,
+input,
+select,
+textarea,
+.button,
+.wp-block-button__link,
+.ct-button,
+.ct-button-ghost {
+    border-radius: 0 !important;
+}
+
+/* Standard single posts use a 2/3 content + 1/3 ad sidebar layout */
+body.single .hts-single-layout {
+    display: grid !important;
+    grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+    gap: clamp(1.5rem, 2vw, 2.5rem);
+    align-items: start;
+    width: 100%;
+}
+
+body.single .hts-single-main {
+    min-width: 0;
+    width: 100%;
+}
+
+body.single .hts-single-ads-sidebar {
+    float: none !important;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-self: start;
+}
+
+body.single .hts-single-ads-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+body.single .hts-single-ads-inner .ct-widget {
+    width: 100%;
+}
+
+@media (max-width: 900px) {
+    body.single .hts-single-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Readability card for single content */
+body.single .hts-single-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+    padding: clamp(1.25rem, 3vw, 2.25rem);
+    width: 100%;
+}
+
+body.single .hts-single-card .entry-content,
+body.single .hts-single-card .ct-author-box,
+body.single .hts-single-card .post-tags {
+    font-size: 1.06rem;
+    line-height: 1.7;
+    color: #0f172a;
+}
+
+body.single .hts-single-card .entry-content p {
+    margin-bottom: 1.2em;
+}
+
+body.single .hts-single-card .entry-content h1,
+body.single .hts-single-card .entry-content h2,
+body.single .hts-single-card .entry-content h3 {
+    color: #0b1324;
+    line-height: 1.3;
+    margin: 1em 0 0.5em;
+}
+
+body.single .hts-single-card .entry-content a {
+    color: #1d4ed8;
+}
+
+body.single .hts-single-card .entry-content figure,
+body.single .hts-single-card .entry-content img,
+body.single .hts-single-card .entry-content iframe {
+    max-width: 100%;
+}
+
+@media (max-width: 640px) {
+    body.single .hts-single-card {
+        padding: 1rem;
+    }
+}
+
+@supports not (display: grid) {
+    body.single .hts-single-layout {
+        display: flex !important;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    body.single .hts-single-main {
+        flex: 0 0 65%;
+    }
+    body.single .hts-single-ads-sidebar {
+        flex: 0 0 35%;
+    }
+    @media (max-width: 900px) {
+        body.single .hts-single-layout {
+            flex-direction: column;
+        }
+        body.single .hts-single-main,
+        body.single .hts-single-ads-sidebar {
+            flex: 0 0 100%;
+        }
+    }
+}

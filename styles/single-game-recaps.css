@@ -1,0 +1,23 @@
+.game-recap-layout {
+    margin-block: 2rem 3rem;
+}
+
+.game-recap-key-card,
+.game-recap-author-card {
+    padding: 1rem 1.25rem;
+}
+
+.game-recap-key-title {
+    margin: .2rem 0 1rem;
+}
+
+.game-recap-video-card {
+    padding: 1rem;
+}
+
+.game-recap-tag-list {
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+    margin-top: .75rem;
+}

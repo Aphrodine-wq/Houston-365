@@ -1,0 +1,31 @@
+.player-profile-archive {
+    margin-block: 2rem 3rem;
+}
+
+.player-profile-archive-grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+}
+
+.player-profile-archive-card {
+    color: inherit;
+    text-decoration: none;
+}
+
+.player-profile-archive-card-body {
+    padding: 1rem;
+}
+
+.player-profile-archive-card-header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.player-profile-archive-card-title {
+    margin: .1rem 0;
+}
+
+.player-profile-archive-pagination {
+    margin-top: 1rem;
+}
