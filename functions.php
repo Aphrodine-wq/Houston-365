@@ -1960,6 +1960,69 @@ add_action('customize_register', function($wp_customize) {
             'type'        => 'url',
         ]);
     }
+
+    // Column Ad 6 (Sticky Sidebar)
+    $wp_customize->add_setting('hts_column_ad_6_shortcode', [
+        'default'           => '',
+        'sanitize_callback' => 'wp_kses_post',
+        'transport'         => 'refresh',
+    ]);
+    $wp_customize->add_control('hts_column_ad_6_shortcode', [
+        'label'       => __('Column Ad 6 (Sticky Sidebar) Shortcode', 'hts-child'),
+        'description' => __('Sticks to the bottom of the sidebar on scroll. Great for high-visibility placements.', 'hts-child'),
+        'section'     => 'hts_front_page',
+        'type'        => 'textarea',
+    ]);
+    $wp_customize->add_setting('hts_column_ad_6_fallback_image', [
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ]);
+    $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, 'hts_column_ad_6_fallback_image', [
+        'label'       => __('Column Ad 6 Fallback Image', 'hts-child'),
+        'description' => __('300x600 recommended.', 'hts-child'),
+        'section'     => 'hts_front_page',
+    ]));
+    $wp_customize->add_setting('hts_column_ad_6_fallback_link', [
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ]);
+    $wp_customize->add_control('hts_column_ad_6_fallback_link', [
+        'label'       => __('Column Ad 6 Fallback Link URL', 'hts-child'),
+        'section'     => 'hts_front_page',
+        'type'        => 'url',
+    ]);
+
+    // In-Feed Ads (between content sections, 3 slots)
+    for ($i = 1; $i <= 3; $i++) {
+        $wp_customize->add_setting("hts_infeed_ad_{$i}_shortcode", [
+            'default'           => '',
+            'sanitize_callback' => 'wp_kses_post',
+            'transport'         => 'refresh',
+        ]);
+        $wp_customize->add_control("hts_infeed_ad_{$i}_shortcode", [
+            'label'       => sprintf(__('In-Feed Ad %d Shortcode', 'hts-child'), $i),
+            'description' => __('Leaderboard ad shown between content sections (728x90 recommended).', 'hts-child'),
+            'section'     => 'hts_front_page',
+            'type'        => 'textarea',
+        ]);
+        $wp_customize->add_setting("hts_infeed_ad_{$i}_fallback_image", [
+            'default'           => '',
+            'sanitize_callback' => 'esc_url_raw',
+        ]);
+        $wp_customize->add_control(new WP_Customize_Image_Control($wp_customize, "hts_infeed_ad_{$i}_fallback_image", [
+            'label'       => sprintf(__('In-Feed Ad %d Fallback Image', 'hts-child'), $i),
+            'section'     => 'hts_front_page',
+        ]));
+        $wp_customize->add_setting("hts_infeed_ad_{$i}_fallback_link", [
+            'default'           => '',
+            'sanitize_callback' => 'esc_url_raw',
+        ]);
+        $wp_customize->add_control("hts_infeed_ad_{$i}_fallback_link", [
+            'label'       => sprintf(__('In-Feed Ad %d Fallback Link URL', 'hts-child'), $i),
+            'section'     => 'hts_front_page',
+            'type'        => 'url',
+        ]);
+    }
 });
 
 // === Hook: Render Top Ad Section ===

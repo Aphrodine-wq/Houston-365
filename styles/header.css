@@ -1,6 +1,7 @@
 .hts-top-header {
     width: 100%;
     background: #050e36;
+    border-bottom: 2px solid var(--texans-red, #A71930);
 }
 
 .hts-top-header__inner {

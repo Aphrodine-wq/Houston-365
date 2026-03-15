@@ -358,3 +358,7 @@ get_template_part('template-parts/front-page/column-ad', null, ['slot' => 3]);
 get_template_part('template-parts/front-page/column-ad', null, ['slot' => 4]);
 get_template_part('template-parts/front-page/column-ad', null, ['slot' => 5]);
 ?>
+
+<div class="sidebar-module--sticky-ad">
+    <?php get_template_part('template-parts/front-page/column-ad', null, ['slot' => 6]); ?>
+</div>

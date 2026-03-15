@@ -128,9 +128,17 @@ $recent_query = new WP_Query($recent_args);
 
     <?php wp_reset_postdata(); ?>
 
+    <?php get_template_part('template-parts/front-page/infeed-ad', null, ['slot' => 1]); ?>
+
     <?php get_template_part('template-parts/sections/section-recruiting'); ?>
+
+    <?php get_template_part('template-parts/front-page/infeed-ad', null, ['slot' => 2]); ?>
+
     <?php get_template_part('template-parts/sections/section-basketball-row'); ?>
     <?php get_template_part('template-parts/sections/section-baseball-softball'); ?>
+
+    <?php get_template_part('template-parts/front-page/infeed-ad', null, ['slot' => 3]); ?>
+
     <?php get_template_part('template-parts/sections/section-other-stories-row'); ?>
 </div>
 
